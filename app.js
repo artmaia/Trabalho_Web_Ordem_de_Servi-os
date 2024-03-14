@@ -25,7 +25,7 @@ app.post('/cadastro', (req, res) => {
 
     // Lógica de validação do cadastro aqui...
     // Simulação de validação bem-sucedida
-    if (email === 'test@example.com' && password === '123456') {
+    if (email === 'test@example.com' && password === '123456789') {
         console.log('Cadastro validado com sucesso.');
         // Se tudo estiver válido, redirecione para a página de login
         res.redirect('/login');
