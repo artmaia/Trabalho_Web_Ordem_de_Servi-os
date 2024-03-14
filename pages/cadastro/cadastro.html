@@ -24,7 +24,7 @@
                     <p>Não se preocupe, para um cadastro inicial informe uma senha e um email válido.</p>
                 </div>
                 <div>
-                    <form method="post" action="/cadastro">
+                    <form id="cadastroForm" method="post" action="/cadastro">
                         <div class="form">
                             <div class="labelInput">
                                 <label>Email</label>
@@ -45,4 +45,27 @@
         </div>
     </section>
 </body>
+<script>
+    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+        const email = document.getElementById('emailCadastro').value;
+        const senha = document.getElementById('passwordCadastro').value;
+        if (!validarEmail(email)) {
+            alert('Email inválido');
+            event.preventDefault();
+        }
+        if (!validarSenha(senha)) {
+            alert('Senha deve ter pelo menos 8 caracteres');
+            event.preventDefault();
+        }
+    });
+
+    function validarEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validarSenha(senha) {
+        return senha.length >= 8;
+    }
+    </script>
 </html>
