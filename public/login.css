@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+
+    font-family: 'Fira Code', monospace;
+    color:brown;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 1px black;    
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header span {
+    font-size: 1.2rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bordao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    color:brown;
+  
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.login {
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.textos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: brown;
+    font-size: 1rem;
+    margin-bottom: 40px;
+  
+}
+
+.textos p {
+    font-size:larger;
+}
+
+.textos h2 {
+    margin-bottom: 30px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.labelInput {
+    display: flex;
+    flex-direction: column;
+}
+  
+label {
+    color: brown;
+    font-size: small;
+}
+  
+input {
+    padding: 10px 30px;
+    border-color: white;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+  
+p {
+    font-size: small;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 1px 1px 1px black;
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+}
+
+.Pform .button {
+    margin-top: 20px;
+}
+
+.loginAdmin {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.textosAdmin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.loginAdmin h2 {
+    margin-bottom: 5px;
+}
+
+.loginAdmin p {
+    margin-bottom: 5px;
+}
+
+.contAdmin {
+    display: flex;
+    align-items: center;
+}
+
+.contAdmin button {
+    margin-left: 50px;
+}
+  

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+    <title>Login</title>
+</head>
+<body>
+    <header class="header">
+        <span>Ordem de serviços</span>
+    </header>
+    <section class="container">
+        <div>
+            <div class="login">
+                <div class="textos">
+                    <h2>Vamos começar?</h2>
+                    <p>Para fazer o login é simples, insira seu email e senha.</p>
+                </div>
+                <div>
+                    <form class="Pform" action="/Login">
+                        <div class="form">
+                            <div class="labelInput">
+                                <label>Email</label>
+                                <input type="email" id='emailLogin' placeholder='Email'/>
+                            </div>
+                            <br>
+                            <div class="labelInput">
+                                <label htmlFor="">Senha</label>
+                                <input type="password" id='passwordLogin' placeholder='Senha'/>
+                            </div>
+                        </div>
+                        <div class="button">
+                            <button type="submit">Enviar</button>
+                        </div>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="loginAdmin">
+                <div class="textosAdmin">
+                    <h2>É um funcionário?</h2>
+                    <p>Nos informe a senha fornecida a vc pelo seu superior</p>
+                </div>
+                <div>
+                    <form action="/SenhaAdmin" class="contAdmin">
+                        <div  class="formAdmin">
+                            <div class="labelInput2">
+                                <input type="password" placeholder='Digite sua senha'/>
+                            </div>
+                        </div>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+    </section>
+</body>
+</html>

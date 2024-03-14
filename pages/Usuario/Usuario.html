@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="usuario.css">
+    <title>Usuario</title>
+</head>
+<body>
+    <header class="header">
+        <div class="span1">
+            <span>Ordem de serviço</span>
+        </div>
+        <div class="span2">
+            <span>Cliente</span>
+        </div>
+    </header>
+    <div class="containerdiv">
+        <section class="section">
+            <h1>Solicitação de Serviço</h1>
+            <div class="containerS">
+                <div class="solicitacao">
+                    <form action="/solicitar_serviço">
+                        <div class="labelInput">
+                            <label htmlFor="">Hora</label>
+                            <input type="text" />
+                        </div>
+                        <div class="labelInput">
+                            <label htmlFor="">Data</label>
+                            <input type="date" name="data" id="data" />
+                        </div>
+                        <div class="labelInput">
+                            <label htmlFor="">Descrição</label>
+                            <textarea name="descricao" id="descricao" cols="30" rows="10"></textarea>
+                        </div>
+                        <div>
+                            <button type='submit'>Solicitar</button>
+                            <div>
+                                <select name="Categoria" id="categoria" aria-placeholder="Escolha categoria">
+                                    <option value="1">Opção 1</option>
+                                    <option value="2">Opção 2</option>
+                                    <option value="3">Opção 3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="section2">
+            <h1>Histórico e andamento das suas solicitações</h1>
+            <div class="containerTabela"></div>
+        </section>
+    </div>
+    
+</body>
+</html>
