@@ -15,6 +15,10 @@ app.get('/login', (req, res) => {
    res.sendFile(path.join(__dirname, 'pages/Login/login.html'));
 });
 
+app.get('/usuario', (req, res) => {
+   res.sendFile(path.join(__dirname, 'pages/Usuario/Usuario.html'));
+})
+
 // Rota para processar o cadastro
 app.post('/cadastro', (req, res) => {
    const { email, password } = req.body;
