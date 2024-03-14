@@ -21,7 +21,7 @@
                     <p>Para fazer o login é simples, insira seu email e senha.</p>
                 </div>
                 <div>
-                    <form method="post" class="Pform" action="/login">
+                    <form id="loginForm" method="post" class="Pform" action="/login">
                         <div class="form">
                             <div class="labelInput">
                                 <label>Email</label>
@@ -60,4 +60,27 @@
             </div>
     </section>
 </body>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        const email = document.getElementById('emailLogin').value;
+        const senha = document.getElementById('passwordLogin').value;
+        if (!validarEmail(email)) {
+            alert('Email inválido');
+            event.preventDefault();
+        }
+        if (!validarSenha(senha)) {
+            alert('Senha deve ter pelo menos 8 caracteres');
+            event.preventDefault();
+        }
+    });
+
+    function validarEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validarSenha(senha) {
+        return senha.length >= 8; // A validação agora está corrigida
+    }
+    </script>
 </html>
