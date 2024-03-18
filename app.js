@@ -12,8 +12,8 @@ app.use(express.urlencoded({extended:false}));
 const conexao = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'1722',
-    database:'crud'
+    password:'1234',
+    database:'TrabalhoWeb'
 });
 
 // teste de conexao
@@ -38,6 +38,36 @@ app.get('/login', (req, res) => {
 app.get('/usuario', (req, res) => {
    res.sendFile(path.join(__dirname, 'pages/Usuario/Usuario.html'));
 })
+
+app.post('/cadastro', (req, res) => {
+    const { email, password } = req.body;
+
+    // Inserir novo usuário no banco de dados
+    conexao.query('INSERT INTO usuarios (email, senha) VALUES (?, ?)', [email, password], (err, results) => {
+        if (err) {
+            console.error('Erro ao inserir novo usuário:', err);
+            res.status(500).send('Erro ao processar o cadastro.');
+            return;
+        }
+        console.log('Novo usuário cadastrado com sucesso.');
+        res.redirect('/login');
+    });
+});
+
+app.post('/login', function(req, res) {
+    const { email, password } = req.body;
+  
+    conexao.query('SELECT * FROM usuarios WHERE email = ? AND senha = ?', [email, password], function(error, results, fields) {
+      if (error) throw error;
+      
+      if (results.length > 0) {
+        res.redirect('/usuario')
+      } else {
+        res.send('Credenciais inválidas.');
+      }
+      res.end();
+    });
+ });
 
 app.post('/solicitar_servico', (req, res) => {
     try {
@@ -72,6 +102,8 @@ app.post('/solicitar_servico', (req, res) => {
         res.redirect('/erroCadastro');
     }
 });
+
+
 // Iniciar o servidor
 app.listen(8081, function() {
     console.log("Servidor Rodando na url http://localhost:8081");
