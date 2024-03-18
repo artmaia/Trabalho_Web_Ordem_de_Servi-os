@@ -2,6 +2,26 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+//modulo mysql
+const mysql = require('mysql2');
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+//configuração do banco de dados
+const conexao = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'1722',
+    database:'crud'
+});
+
+// teste de conexao
+conexao.connect(function(erro){
+    if(erro) throw erro;
+    console.log('Conexao bem sucedida');
+})
+
 // Middleware para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -19,23 +39,39 @@ app.get('/usuario', (req, res) => {
    res.sendFile(path.join(__dirname, 'pages/Usuario/Usuario.html'));
 })
 
-// Rota para processar o cadastro
-app.post('/cadastro', (req, res) => {
-   const { email, password } = req.body;
+app.post('/solicitar_servico', (req, res) => {
+    try {
+        let hora = req.body.hora;
+        let data = req.body.data;
+        let descricao = req.body.descricao;
+        let categoria = req.body.categoria;
 
-    // Lógica de validação do cadastro aqui...
-    // Simulação de validação bem-sucedida
-    if (email === 'test@example.com' && password === '123456789') {
-        console.log('Cadastro validado com sucesso.');
-        // Se tudo estiver válido, redirecione para a página de login
-        res.redirect('/login');
-    } else {
-        // Simulação de falha na validação
-        console.log('Erro de validação do cadastro.');
-        res.status(400).send('Erro de validação do cadastro.');
+        // Verifica se todos os campos foram preenchidos
+        if (!hora || !data || !descricao || !categoria) {
+            res.redirect('/falhaCadastro');
+            return;
+        }
+
+        // Monta a query SQL para inserir os dados na tabela "servico"
+        let sql = `INSERT INTO servico (hora, data, descricao, categoria) VALUES (?, ?, ?, ?)`;
+        let values = [hora, data, descricao, categoria];
+
+        // Executa a query no banco de dados
+        conexao.query(sql, values, (error, resultado) => {
+            if (error) {
+                console.error('Erro ao cadastrar serviço:', error);
+                res.redirect('/erroCadastro');
+                return;
+            }
+
+            console.log('Serviço cadastrado com sucesso!');
+            res.redirect('/okCadastro');
+        });
+    } catch (erro) {
+        console.error('Erro ao processar requisição:', erro);
+        res.redirect('/erroCadastro');
     }
 });
-
 // Iniciar o servidor
 app.listen(8081, function() {
     console.log("Servidor Rodando na url http://localhost:8081");

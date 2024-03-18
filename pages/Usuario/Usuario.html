@@ -23,10 +23,10 @@
             <h1>Solicitação de Serviço</h1>
             <div class="containerS">
                 <div class="solicitacao">
-                    <form action="/solicitar_serviço">
+                    <form action="/solicitar_servico" method="post">
                         <div class="labelInput">
                             <label htmlFor="">Hora</label>
-                            <input type="text" />
+                            <input type="text" name="hora" id="hora"/>
                         </div>
                         <div class="labelInput">
                             <label htmlFor="">Data</label>
@@ -39,7 +39,7 @@
                         <div>
                             <button type='submit'>Solicitar</button>
                             <div>
-                                <select name="Categoria" id="categoria" aria-placeholder="Escolha categoria">
+                                <select name="categoria" id="categoria" aria-placeholder="Escolha categoria">
                                     <option value="1">Opção 1</option>
                                     <option value="2">Opção 2</option>
                                     <option value="3">Opção 3</option>
