@@ -140,6 +140,28 @@ app.post('/solicitar_servico', (req, res) => {
     }
 });
 
+
+//Consulta tabela
+app.get('/dados_solicitacao', (req, res) => {
+    // Recuperar o ID do usuário da sessão
+    const usuario_id = req.session.usuario_id;
+
+    // Consulta SQL para selecionar as solicitações do usuário logado
+    const sql = 'SELECT usuario_id, hora, data, descricao, categoria FROM servico WHERE usuario_id = ?';
+  
+    // Executa a consulta SQL com o ID do usuário como parâmetro
+    conexao.query(sql, [usuario_id], (err, results) => {
+        if (err) {
+            // Em caso de erro, envia uma resposta de erro para o cliente
+            res.status(500).send('Erro ao buscar dados do banco de dados');
+            return;
+        }
+  
+        // Se a consulta for bem-sucedida, envia os resultados para o cliente
+        res.json(results);
+    });
+});
+
 // Iniciar o servidor
 app.listen(8081, function() {
     console.log("Servidor Rodando na url http://localhost:8081");

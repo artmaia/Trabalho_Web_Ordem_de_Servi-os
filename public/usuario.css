@@ -81,3 +81,28 @@ button {
     color: white;
     cursor: pointer;
 }
+
+/* Estilização da tabela */
+#tabelaSolicitacoes {
+    width: 100%;
+    border-collapse: collapse;
+    max-height: 300px; /* Definir altura máxima da tabela para limitar a área rolável */
+    overflow-y: auto; /* Permitir a rolagem vertical apenas para a lista de rolagem */
+}
+
+#tabelaSolicitacoes th, #tabelaSolicitacoes td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tabelaSolicitacoes th {
+    background-color: #f2f2f2;
+}
+
+#tabelaSolicitacoes tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#tabelaSolicitacoes tr:hover {
+    background-color: #ddd;
+}

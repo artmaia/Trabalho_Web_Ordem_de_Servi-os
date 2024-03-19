@@ -68,6 +68,39 @@
             </table>
         </section>
     </div>
+    <script>
+        // Função para fazer a solicitação AJAX e preencher a tabela
+        function preencherTabela() {
+            // Realiza uma solicitação AJAX para obter os dados do servidor
+            fetch('/dados_solicitacao') // Alteração aqui: substitua '/dados' por '/dados_solicitacao'
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Dados recebidos do servidor:', data); // Adiciona um log de console para verificar os dados recebidos
+                    
+                    // Limpa o conteúdo atual da tabela
+                    document.getElementById('tabelaSolicitacoes').querySelector('tbody').innerHTML = '';
     
+                    // Itera sobre os dados recebidos e os adiciona à tabela
+                    data.forEach(row => {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${row.id}</td>
+                            <td>${row.hora}</td>
+                            <td>${row.data}</td>
+                            <td>${row.descricao}</td>
+                            <td>${row.categoria}</td>
+                        `;
+                        document.getElementById('tabelaSolicitacoes').querySelector('tbody').appendChild(newRow);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter dados:', error));
+        }
+    
+        // Chama a função para preencher a tabela quando a página carrega
+        window.onload = () => {
+            console.log('Página carregada'); // Adiciona um log de console para verificar se a página foi carregada
+            preencherTabela();
+    };
+    </script>
 </body>
 </html>
