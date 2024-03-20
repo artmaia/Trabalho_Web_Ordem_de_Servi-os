@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Administrador</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="span1">
+                <span>Ordem de serviço</span>
+            </div>
+            <div class="span2">
+                <span>Administrador</span>
+            </div>
+        </header>
+        <div class="container-table">
+            <table class="table" id="tabelaSolicitacoesAdmin">
+                <caption>Solicitações</caption>
+                <thead>
+                    <tr>
+                        <th>Serviços:</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function preencherTabela() {
+            fetch('/solicitacoesAdmin')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tabelaSolicitacoesAdmin').querySelector('tbody').innerHTML = '';
+    
+                    data.forEach(row => {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${row.email}</td>
+                            <td>${row.categoria}</td>
+                            <td>${row.data}</td>
+                            <td>${row.descricao}</td>
+                            <td>${row.prioridade}</td>
+                            <td>
+                                <button onclick="definirPrioridade('${row.id}', 'Urgente')">Urgente</button>
+                                <button onclick="definirPrioridade('${row.id}', 'Atenção')">Atenção</button>
+                                <button onclick="definirPrioridade('${row.id}', 'Em Espera')">Em Espera</button>
+                            </td>
+                        `;
+                        document.getElementById('tabelaSolicitacoesAdmin').querySelector('tbody').appendChild(newRow);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter dados:', error));
+        }
+
+        function definirPrioridade(id, prioridade) {
+            // Aqui você pode enviar uma solicitação AJAX para atualizar a prioridade no banco de dados
+            // Exemplo:
+            // fetch('/atualizarPrioridade', {
+            //     method: 'POST',
+            //     body: JSON.stringify({ id, prioridade }),
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     }
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     // Lógica para lidar com a resposta
+            // })
+            // .catch(error => console.error('Erro ao atualizar prioridade:', error));
+            console.log(`Prioridade definida como ${prioridade} para o serviço com ID ${id}`);
+        }
+    
+        window.onload = () => {
+            console.log('Página carregada');
+            preencherTabela();
+        };
+    </script>
+</body>
+</html>
