@@ -11,7 +11,8 @@
 </head>
 <body>
     <header class="header">
-        <span>Ordem de serviços</span>
+        <span>GoService</span>
+        <a href="/">Cadastro</a>
     </header>
     <section class="container">
         <div>
@@ -48,10 +49,10 @@
                     <p>Nos informe a senha fornecida a vc pelo seu superior</p>
                 </div>
                 <div>
-                    <form action="/SenhaAdmin" class="contAdmin">
+                    <form action="/SenhaAdmin" class="contAdmin" method="post">
                         <div  class="formAdmin">
                             <div class="labelInput2">
-                                <input type="password" placeholder='Digite sua senha'/>
+                                <input type="password" name="password" placeholder='Digite sua senha'/>
                             </div>
                         </div>
                         <button type="submit">Enviar</button>

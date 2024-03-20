@@ -107,6 +107,28 @@ app.post('/login', function(req, res) {
     });
 });
 
+//login administrador
+app.post('/SenhaAdmin', (req, res) => {
+    const { password } = req.body;
+
+    // Verifica se a senha do administrador está correta
+    if (password === 'admin1234') {
+        // Senha correta, redireciona para a página do administrador
+        res.redirect('/administrador');
+    } else {
+        // Senha incorreta, envia uma resposta HTML com um script JavaScript para exibir um alerta
+        const responseHTML = `
+            <script>
+                alert('Senha incorreta');
+                window.location.href = '/login';
+            </script>
+        `;
+        res.send(responseHTML);
+    }
+});
+
+
+
 //solicitação de serviços
 app.post('/solicitar_servico', (req, res) => {
     try {
@@ -136,7 +158,7 @@ app.post('/solicitar_servico', (req, res) => {
             }
 
             console.log('Serviço cadastrado com sucesso!');
-            res.redirect('/okCadastro');
+            res.redirect('/usuario');
         });
     } catch (erro) {
         console.error('Erro ao processar requisição:', erro);

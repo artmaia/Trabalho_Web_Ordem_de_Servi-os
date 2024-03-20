@@ -84,9 +84,8 @@ button {
 
 /* Estilização da tabela */
 #tabelaSolicitacoes {
-    width: 100%;
     border-collapse: collapse;
-    max-height: 300px; /* Definir altura máxima da tabela para limitar a área rolável */
+    max-height: 500px; /* Definir altura máxima da tabela para limitar a área rolável */
     overflow-y: auto; /* Permitir a rolagem vertical apenas para a lista de rolagem */
 }
 
@@ -106,3 +105,20 @@ button {
 #tabelaSolicitacoes tr:hover {
     background-color: #ddd;
 }
+
+.estiloCateg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.opcoes {
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.scroll {
+    overflow-y: auto; 
+    width: 640px;
+}
+

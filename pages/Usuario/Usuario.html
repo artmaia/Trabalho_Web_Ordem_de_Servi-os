@@ -36,14 +36,14 @@
                             <label htmlFor="">Descrição</label>
                             <textarea name="descricao" id="descricao" cols="30" rows="10"></textarea>
                         </div>
-                        <div>
+                        <div class="estiloCateg">
                             <button type='submit'>Solicitar</button>
                             <div>
-                                <select name="categoria" id="categoria" aria-placeholder="Escolha categoria">
+                                <select name="categoria" id="categoria" aria-placeholder="Escolha categoria" class="opcoes">
                                     <option value="Instalação">Instalação</option>
                                     <option value="Manutenção">Manutenção</option>
                                     <option value="Compra">Compra</option>
-                                </select>
+                                </select> 
                             </div>
                         </div>
                     </form>
@@ -52,20 +52,22 @@
         </section>
         <section class="section2">
             <h1>Histórico e andamento das suas solicitações</h1>
-            <table id="tabelaSolicitacoes">
-                <thead>
-                    <tr>
-                        <th>Hora</th>
-                        <th>Data</th>
-                        <th>Descrição</th>
-                        <th>Categoria</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aqui serão inseridos os dados da tabela dinamicamente com JavaScript -->
-                </tbody>
-            </table>
+            <div class="scroll">
+                <table id="tabelaSolicitacoes">
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aqui serão inseridos os dados da tabela dinamicamente com JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </section>
     </div>
     <script>

@@ -35,10 +35,17 @@
                 </tbody>
             </table>
         </div>
+        <br>
+        <h2>Selecione o estado atual do serviço</h2>
+        <br>
     </div>
     <br>
-    <div>
-        <div class="container-table">
+    <div class="container2">
+        <div class="textos">
+            <h2>Serviços em Urgencia</h2>
+            <p>Sempre dê prioridade máxima a esses serviços</p>
+        </div>
+        <div class="container-table1">
             <table class="table" id="tabelaSolicitacoesUrgentes">
                 <caption>Serviços com Urgência</caption>
                 <thead>
@@ -55,7 +62,11 @@
             </table>
         </div>
         <br>
-        <div class="container-table">
+        <div class="textos">
+            <h2>Serviços em Atenção</h2>
+            <p>Esses serviços tem uma prioridade alta mas podem esperar um pouco</p>
+        </div>
+        <div class="container-table2">
             <table class="table" id="tabelaSolicitacoesAtencao">
                 <caption>Serviços em Atenção</caption>
                 <thead>
@@ -72,7 +83,11 @@
             </table>
         </div>
         <br>
-        <div class="container-table">
+        <div class="textos">
+            <h2>Serviços em Espera</h2>
+            <p>Esses serviços são mais simples e podem ser resolvido com calma</p>
+        </div>
+        <div class="container-table3">
             <table class="table" id="tabelaSolicitacoesEspera">
                 <caption>Serviços que podem esperar</caption>
                 <thead>
@@ -184,25 +199,6 @@
             return newRow;
         }
 
-        //to mexendo aqui!!!!
-        // function criarLinhaTabelaPrioridade1(row) {
-        //     const newRow = document.createElement('tr');
-        //     newRow.innerHTML = `
-        //         <td>${row.email}</td>
-        //         <td>${row.categoria}</td>
-        //         <td>${row.data}</td>
-        //         <td>${row.descricao}</td>
-        //         <td>${row.tipo}</td>
-        //         <td>
-        //             <button class="btn-urgente" onclick="definirStatus('${row.id}', 'Analise')">Em análise</button>
-        //             <button class="btn-atencao" onclick="definirStatus('${row.id}', 'Andamento)">Em andamento</button>
-        //             <button class="btn-espera" onclick="definirStatus('${row.id}', 'Concluido')">Concluído</button>
-        //         </td>
-        //     `;
-        //     return newRow;
-        // } //to mexendo aqui!!!
-
-
         // Função para formatar a data
         function formatarData(data) {
             // Verifica se a data está no formato ISO 8601 (AAAA-MM-DDTHH:MM:SS.MSZ)
@@ -234,6 +230,7 @@
                 }
                 console.log('Tipo de serviço atualizado com sucesso');
                 // Aqui você pode adicionar qualquer lógica adicional, como recarregar a tabela de serviços
+                location.reload();
             })
             .catch(error => {
                 console.error('Erro ao atualizar tipo de serviço:', error);
@@ -258,6 +255,7 @@
                 }
                 console.log('Tipo de serviço atualizado com sucesso');
                 // Aqui você pode adicionar qualquer lógica adicional, como recarregar a tabela de serviços
+                location.reload();
             })
             .catch(error => {
                 console.error('Erro ao atualizar tipo de serviço:', error);

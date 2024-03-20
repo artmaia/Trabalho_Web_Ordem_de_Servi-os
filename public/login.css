@@ -17,14 +17,28 @@
     box-shadow: 1px 1px 1px black;    
 
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
 }
 
 .header span {
     font-size: 1.2rem;
+    margin-left: 10px;
 }
+
+.header a {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header a:hover {
+    color: rgb(234, 87, 87);
+
+}
+
 
 .container {
   display: flex;
