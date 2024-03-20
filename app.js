@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended:false}));
 const conexao = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'1722',
+    password:'1234',
     database:'crud'
 });
 
@@ -151,7 +151,7 @@ app.get('/dados_solicitacao', (req, res) => {
     const usuario_id = req.session.usuario_id;
 
     // Consulta SQL para selecionar as solicitações do usuário logado
-    const sql = 'SELECT usuario_id, hora, data, descricao, categoria FROM servico WHERE usuario_id = ?';
+    const sql = 'SELECT usuario_id, hora, data, descricao, categoria, status FROM servico WHERE usuario_id = ?';
   
     // Executa a consulta SQL com o ID do usuário como parâmetro
     conexao.query(sql, [usuario_id], (err, results) => {
@@ -185,7 +185,7 @@ app.post('/atualizarTipoServico', (req, res) => {
     const { id, tipo } = req.body;
 
     // Verifica se o tipo é válido
-    if (!['Urgente', 'Atenção', 'Em Espera'].includes(tipo)) {
+    if (!['Urgente', 'Atenção', 'Esperar'].includes(tipo)) {
         res.status(400).send('Tipo de serviço inválido');
         return;
     }
@@ -203,6 +203,72 @@ app.post('/atualizarTipoServico', (req, res) => {
         res.status(200).send('Tipo de serviço atualizado com sucesso');
     });
 });
+
+//Atualizar Status
+app.post('/atualizarTipoStatus', (req, res) => {
+    const { id, status } = req.body;
+
+    // Verifica se o tipo é válido
+    if (!['Analise', 'Andamento', 'Concluido'].includes(status)) {
+        res.status(400).send('Erro em atualizar status');
+        return;
+    }
+
+    // Atualiza o tipo do serviço na tabela 'servico'
+    const sql = 'UPDATE servico SET status = ? WHERE id = ?';
+    conexao.query(sql, [status, id], (err, result) => {
+        if (err) {
+            console.error('Erro em atualizar status:', err);
+            res.status(500).send('Erro em atualizar status');
+            return;
+        }
+
+        console.log('Status atualizado com sucesso:', result.affectedRows);
+        res.status(200).send('Status atualizado com sucesso');
+    });
+});
+//Atualizar Status
+
+//requisição dos dados da tabela serviço no bd para a tabela principal do administrador
+// Rota para preencher a tabela com serviços de prioridade "Urgente"
+app.get('/preencherTabelaUrgente', (req, res) => {
+    const sql = "SELECT s.id, u.email, s.data, s.descricao, s.categoria FROM servico s JOIN banco_usuarios u ON s.usuario_id = u.id WHERE s.tipo = 'Urgente'";
+  
+    conexao.query(sql, (err, results) => {
+        if (err) {
+            res.status(500).send('Erro ao buscar dados do banco de dados');
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/preencherTabelaAtencao', (req, res) => {
+    const sql = "SELECT s.id, u.email, s.data, s.descricao, s.categoria FROM servico s JOIN banco_usuarios u ON s.usuario_id = u.id WHERE s.tipo = 'Atencao'";
+  
+    conexao.query(sql, (err, results) => {
+        if (err) {
+            res.status(500).send('Erro ao buscar dados do banco de dados');
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/preencherTabelaEspera', (req, res) => {
+    const sql = "SELECT s.id, u.email, s.data, s.descricao, s.categoria FROM servico s JOIN banco_usuarios u ON s.usuario_id = u.id WHERE s.tipo = 'Esperar'";
+  
+    conexao.query(sql, (err, results) => {
+        if (err) {
+            res.status(500).send('Erro ao buscar dados do banco de dados');
+            return;
+        }
+        res.json(results);
+    });
+});
+
+
+
 
 
 

@@ -24,7 +24,11 @@
                 <caption>Solicitações</caption>
                 <thead>
                     <tr>
-                        <th>Serviços:</th>
+                        <th>Email:</th>
+                        <th>Hora:</th>
+                        <th>Data:</th>
+                        <th>Descrição:</th>
+                        <th>Prioridade:</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -32,8 +36,63 @@
             </table>
         </div>
     </div>
+    <br>
+    <div>
+        <div class="container-table">
+            <table class="table" id="tabelaSolicitacoesUrgentes">
+                <caption>Serviços com Urgência</caption>
+                <thead>
+                    <tr>
+                        <th>Email:</th>
+                        <th>Hora:</th>
+                        <th>Data:</th>
+                        <th>Descrição:</th>
+                        <th>Status:</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="container-table">
+            <table class="table" id="tabelaSolicitacoesAtencao">
+                <caption>Serviços em Atenção</caption>
+                <thead>
+                    <tr>
+                        <th>Email:</th>
+                        <th>Hora:</th>
+                        <th>Data:</th>
+                        <th>Descrição:</th>
+                        <th>Status:</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="container-table">
+            <table class="table" id="tabelaSolicitacoesEspera">
+                <caption>Serviços que podem esperar</caption>
+                <thead>
+                    <tr>
+                        <th>Email:</th>
+                        <th>Hora:</th>
+                        <th>Data:</th>
+                        <th>Descrição:</th>
+                        <th>Status:</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 
     <script>
+
         function preencherTabela() {
             fetch('/solicitacoesAdmin')
                 .then(response => response.json())
@@ -41,58 +100,179 @@
                     document.getElementById('tabelaSolicitacoesAdmin').querySelector('tbody').innerHTML = '';
     
                     data.forEach(row => {
-                        const newRow = document.createElement('tr');
-                        newRow.innerHTML = `
-                            
-                            <td>${row.email}</td>
-                            <td>${row.categoria}</td>
-                            <td>${row.data}</td>
-                            <td>${row.descricao}</td>
-                            <td>${row.prioridade}</td>
-                            <td>
-                                <td>
-                                    <button class="btn-urgente" onclick="definirPrioridade('${row.id}', 'Urgente')">Urgente</button>
-                                    <button class="btn-atencao" onclick="definirPrioridade('${row.id}', 'Atenção')">Atenção</button>
-                                    <button class="btn-espera" onclick="definirPrioridade('${row.id}', 'Em Espera')">Em Espera</button>
-
-                                </td>
-                                
-                            </td>
-                        `;
+                        const newRow = criarLinhaTabela(row);
                         document.getElementById('tabelaSolicitacoesAdmin').querySelector('tbody').appendChild(newRow);
                     });
                 })
                 .catch(error => console.error('Erro ao obter dados:', error));
         }
-//função para atribuir o tipo
-function definirPrioridade(id, tipo) {
-    fetch('/atualizarTipoServico', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: id,
-            tipo: tipo
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro ao atualizar tipo de serviço');
+
+        function preencherTabelaUrgente() {
+            fetch('/preencherTabelaUrgente')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tabelaSolicitacoesUrgentes').querySelector('tbody').innerHTML = '';
+
+                    data.forEach(row => {
+                        const newRow = criarLinhaTabelaPrioridade(row);
+                        document.getElementById('tabelaSolicitacoesUrgentes').querySelector('tbody').appendChild(newRow);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter dados:', error));
         }
-        console.log('Tipo de serviço atualizado com sucesso');
-        // Aqui você pode adicionar qualquer lógica adicional, como recarregar a tabela de serviços
-    })
-    .catch(error => {
-        console.error('Erro ao atualizar tipo de serviço:', error);
-        // Aqui você pode lidar com erros de forma adequada, por exemplo, exibindo uma mensagem de erro ao usuário
-    });
-}
+
+        //To mexendo aqui!!
+        function preencherTabelaAtencao() {
+            fetch('/preencherTabelaAtencao')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tabelaSolicitacoesAtencao').querySelector('tbody').innerHTML = '';
+
+                    data.forEach(row => {
+                        const newRow = criarLinhaTabelaPrioridade(row);
+                        document.getElementById('tabelaSolicitacoesAtencao').querySelector('tbody').appendChild(newRow);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter dados:', error));
+        }//to mexendo aqui!!
+
+        //to mexendo aqui
+        function preencherTabelaEspera() {
+            fetch('/preencherTabelaEspera')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tabelaSolicitacoesEspera').querySelector('tbody').innerHTML = '';
+
+                    data.forEach(row => {
+                        const newRow = criarLinhaTabelaPrioridade(row);
+                        document.getElementById('tabelaSolicitacoesEspera').querySelector('tbody').appendChild(newRow);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter dados:', error));
+        }//to mexendo aqui
+
+        function criarLinhaTabela(row) {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${row.email}</td>
+                <td>${row.categoria}</td>
+                <td>${formatarData(row.data)}</td>
+                <td>${row.descricao}</td>
+                
+                <td>
+                    <button class="btn-urgente" onclick="definirPrioridade('${row.id}', 'Urgente')">Urgente</button>
+                    <button class="btn-atencao" onclick="definirPrioridade('${row.id}', 'Atenção')">Atenção</button>
+                    <button class="btn-espera" onclick="definirPrioridade('${row.id}', 'Esperar')">Pode esperar</button>
+                </td>
+            `;
+            return newRow;
+        }
+
+        function criarLinhaTabelaPrioridade(row) {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${row.email}</td>
+                <td>${row.categoria}</td>
+                <td>${formatarData(row.data)}</td>
+                <td>${row.descricao}</td>
+                <td>
+                    <button class="btn-urgente" onclick="definirStatus('${row.id}', 'Analise')">Em análise</button>
+                    <button class="btn-atencao" onclick="definirStatus('${row.id}', 'Andamento)">Em andamento</button>
+                    <button class="btn-espera" onclick="definirStatus('${row.id}', 'Concluido')">Concluído</button>
+                </td>
+            `;
+            return newRow;
+        }
+
+        //to mexendo aqui!!!!
+        // function criarLinhaTabelaPrioridade1(row) {
+        //     const newRow = document.createElement('tr');
+        //     newRow.innerHTML = `
+        //         <td>${row.email}</td>
+        //         <td>${row.categoria}</td>
+        //         <td>${row.data}</td>
+        //         <td>${row.descricao}</td>
+        //         <td>${row.tipo}</td>
+        //         <td>
+        //             <button class="btn-urgente" onclick="definirStatus('${row.id}', 'Analise')">Em análise</button>
+        //             <button class="btn-atencao" onclick="definirStatus('${row.id}', 'Andamento)">Em andamento</button>
+        //             <button class="btn-espera" onclick="definirStatus('${row.id}', 'Concluido')">Concluído</button>
+        //         </td>
+        //     `;
+        //     return newRow;
+        // } //to mexendo aqui!!!
 
 
+        // Função para formatar a data
+        function formatarData(data) {
+            // Verifica se a data está no formato ISO 8601 (AAAA-MM-DDTHH:MM:SS.MSZ)
+            if (data.includes('T')) {
+                // Extrai as partes da data no formato ISO 8601
+                const partes = data.split('T')[0].split('-');
+                // Formata a data para o formato desejado (DD/MM/AAAA)
+                return `${partes[2]}/${partes[1]}/${partes[0]}`;
+            } else {
+                // A data já está no formato desejado
+                return data;
+            }
+        }
+
+        function definirPrioridade(id, tipo) {
+            fetch('/atualizarTipoServico', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    tipo: tipo
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar tipo de serviço');
+                }
+                console.log('Tipo de serviço atualizado com sucesso');
+                // Aqui você pode adicionar qualquer lógica adicional, como recarregar a tabela de serviços
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar tipo de serviço:', error);
+                // Aqui você pode lidar com erros de forma adequada, por exemplo, exibindo uma mensagem de erro ao usuário
+            });
+        }
+        //definir Status
+        function definirStatus(id, status) {
+            fetch('/atualizarTipoStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    status: status
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar tipo de serviço');
+                }
+                console.log('Tipo de serviço atualizado com sucesso');
+                // Aqui você pode adicionar qualquer lógica adicional, como recarregar a tabela de serviços
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar tipo de serviço:', error);
+                // Aqui você pode lidar com erros de forma adequada, por exemplo, exibindo uma mensagem de erro ao usuário
+            });
+        }
+        //definir Status
+
+        // Chama a função para preencher a tabela quando a página carrega
         window.onload = () => {
             console.log('Página carregada');
             preencherTabela();
+            preencherTabelaUrgente();
+            preencherTabelaAtencao();
+            preencherTabelaEspera();
         };
     </script>
 </body>

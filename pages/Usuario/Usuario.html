@@ -40,9 +40,9 @@
                             <button type='submit'>Solicitar</button>
                             <div>
                                 <select name="categoria" id="categoria" aria-placeholder="Escolha categoria">
-                                    <option value="1">Opção 1</option>
-                                    <option value="2">Opção 2</option>
-                                    <option value="3">Opção 3</option>
+                                    <option value="Instalação">Instalação</option>
+                                    <option value="Manutenção">Manutenção</option>
+                                    <option value="Compra">Compra</option>
                                 </select>
                             </div>
                         </div>
@@ -55,11 +55,11 @@
             <table id="tabelaSolicitacoes">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Hora</th>
                         <th>Data</th>
                         <th>Descrição</th>
                         <th>Categoria</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,29 +78,46 @@
                     console.log('Dados recebidos do servidor:', data); // Adiciona um log de console para verificar os dados recebidos
                     
                     // Limpa o conteúdo atual da tabela
-                    document.getElementById('tabelaSolicitacoes').querySelector('tbody').innerHTML = '';
+                    const tabela = document.getElementById('tabelaSolicitacoes').querySelector('tbody');
+                    tabela.innerHTML = '';
     
                     // Itera sobre os dados recebidos e os adiciona à tabela
                     data.forEach(row => {
                         const newRow = document.createElement('tr');
                         newRow.innerHTML = `
-                            <td>${row.id}</td>
                             <td>${row.hora}</td>
-                            <td>${row.data}</td>
+                            <td>${formatarData(row.data)}</td> <!-- Alteração aqui: chama a função para formatar a data -->
                             <td>${row.descricao}</td>
                             <td>${row.categoria}</td>
+                            <td>${row.status}</td>
                         `;
-                        document.getElementById('tabelaSolicitacoes').querySelector('tbody').appendChild(newRow);
+                        tabela.appendChild(newRow);
                     });
                 })
                 .catch(error => console.error('Erro ao obter dados:', error));
         }
     
+        // Função para formatar a data (DD/MM/AAAA)
+        // Função para formatar a data
+        function formatarData(data) {
+            // Verifica se a data está no formato ISO 8601 (AAAA-MM-DDTHH:MM:SS.MSZ)
+            if (data.includes('T')) {
+                // Extrai as partes da data no formato ISO 8601
+                const partes = data.split('T')[0].split('-');
+                // Formata a data para o formato desejado (DD/MM/AAAA)
+                return `${partes[2]}/${partes[1]}/${partes[0]}`;
+            } else {
+                // A data já está no formato desejado
+                return data;
+            }
+        }
+
         // Chama a função para preencher a tabela quando a página carrega
         window.onload = () => {
             console.log('Página carregada'); // Adiciona um log de console para verificar se a página foi carregada
             preencherTabela();
-    };
+        };
     </script>
+    
 </body>
 </html>
