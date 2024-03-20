@@ -166,6 +166,21 @@ app.get('/dados_solicitacao', (req, res) => {
     });
 });
 
+
+//requisição dos dados da tabela serviço no bd para a tabela principal do administrador
+app.get('/solicitacoesAdmin', (req, res) => {
+    const sql = 'SELECT email, data, descricao, categoria FROM servico';
+  
+    conexao.query(sql, (err, results) => {
+        if (err) {
+            res.status(500).send('Erro ao buscar dados do banco de dados');
+            return;
+        }
+        res.json(results);
+    });
+});
+
+
 // Iniciar o servidor
 app.listen(8081, function() {
     console.log("Servidor Rodando na url http://localhost:8081");
