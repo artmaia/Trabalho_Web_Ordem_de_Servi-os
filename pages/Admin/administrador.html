@@ -43,15 +43,20 @@
                     data.forEach(row => {
                         const newRow = document.createElement('tr');
                         newRow.innerHTML = `
+                            
                             <td>${row.email}</td>
                             <td>${row.categoria}</td>
                             <td>${row.data}</td>
                             <td>${row.descricao}</td>
                             <td>${row.prioridade}</td>
                             <td>
-                                <button onclick="definirPrioridade('${row.id}', 'Urgente')">Urgente</button>
-                                <button onclick="definirPrioridade('${row.id}', 'Atenção')">Atenção</button>
-                                <button onclick="definirPrioridade('${row.id}', 'Em Espera')">Em Espera</button>
+                                <td>
+                                    <button class="btn-urgente" onclick="definirPrioridade('${row.id}', 'Urgente')">Urgente</button>
+                                    <button class="btn-atencao" onclick="definirPrioridade('${row.id}', 'Atenção')">Atenção</button>
+                                    <button class="btn-espera" onclick="definirPrioridade('${row.id}', 'Em Espera')">Em Espera</button>
+
+                                </td>
+                                
                             </td>
                         `;
                         document.getElementById('tabelaSolicitacoesAdmin').querySelector('tbody').appendChild(newRow);
@@ -59,25 +64,32 @@
                 })
                 .catch(error => console.error('Erro ao obter dados:', error));
         }
-
-        function definirPrioridade(id, prioridade) {
-            // Aqui você pode enviar uma solicitação AJAX para atualizar a prioridade no banco de dados
-            // Exemplo:
-            // fetch('/atualizarPrioridade', {
-            //     method: 'POST',
-            //     body: JSON.stringify({ id, prioridade }),
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     }
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     // Lógica para lidar com a resposta
-            // })
-            // .catch(error => console.error('Erro ao atualizar prioridade:', error));
-            console.log(`Prioridade definida como ${prioridade} para o serviço com ID ${id}`);
+//função para atribuir o tipo
+function definirPrioridade(id, tipo) {
+    fetch('/atualizarTipoServico', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            tipo: tipo
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao atualizar tipo de serviço');
         }
-    
+        console.log('Tipo de serviço atualizado com sucesso');
+        // Aqui você pode adicionar qualquer lógica adicional, como recarregar a tabela de serviços
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar tipo de serviço:', error);
+        // Aqui você pode lidar com erros de forma adequada, por exemplo, exibindo uma mensagem de erro ao usuário
+    });
+}
+
+
         window.onload = () => {
             console.log('Página carregada');
             preencherTabela();

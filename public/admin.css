@@ -81,3 +81,9 @@ body {
 .table tbody tr:hover {
     background-color: #ddd;
 }
+
+.btn-urgente, .btn-atencao, .btn-espera {
+    width: 100px; /* Define uma largura fixa para os botões */
+    padding: 2px; /* Adiciona um preenchimento interno para melhorar a aparência */
+    margin-right: 5px; /* Adiciona um espaçamento entre os botões */
+}

@@ -21,8 +21,8 @@ app.use(express.urlencoded({extended:false}));
 const conexao = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'1234',
-    database:'TrabalhoWeb'
+    password:'1722',
+    database:'crud'
 });
 
 
@@ -169,7 +169,7 @@ app.get('/dados_solicitacao', (req, res) => {
 
 //requisição dos dados da tabela serviço no bd para a tabela principal do administrador
 app.get('/solicitacoesAdmin', (req, res) => {
-    const sql = 'SELECT email, data, descricao, categoria FROM servico';
+    const sql = 'SELECT s.id, u.email, s.data, s.descricao, s.categoria FROM servico s JOIN banco_usuarios u ON s.usuario_id = u.id';
   
     conexao.query(sql, (err, results) => {
         if (err) {
@@ -179,6 +179,31 @@ app.get('/solicitacoesAdmin', (req, res) => {
         res.json(results);
     });
 });
+
+//Atualizar o serviço
+app.post('/atualizarTipoServico', (req, res) => {
+    const { id, tipo } = req.body;
+
+    // Verifica se o tipo é válido
+    if (!['Urgente', 'Atenção', 'Em Espera'].includes(tipo)) {
+        res.status(400).send('Tipo de serviço inválido');
+        return;
+    }
+
+    // Atualiza o tipo do serviço na tabela 'servico'
+    const sql = 'UPDATE servico SET tipo = ? WHERE id = ?';
+    conexao.query(sql, [tipo, id], (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar tipo de serviço:', err);
+            res.status(500).send('Erro ao atualizar tipo de serviço');
+            return;
+        }
+
+        console.log('Tipo de serviço atualizado com sucesso:', result.affectedRows);
+        res.status(200).send('Tipo de serviço atualizado com sucesso');
+    });
+});
+
 
 
 // Iniciar o servidor
