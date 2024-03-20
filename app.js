@@ -21,8 +21,8 @@ app.use(express.urlencoded({extended:false}));
 const conexao = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'1722',
-    database:'crud'
+    password:'1234',
+    database:'TrabalhoWeb'
 });
 
 
@@ -47,7 +47,11 @@ app.get('/login', (req, res) => {
 
 app.get('/usuario', (req, res) => {
    res.sendFile(path.join(__dirname, 'pages/Usuario/Usuario.html'));
-})
+});
+
+app.get('/administrador', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages/Admin/administrador.html'));
+});
 
 //cadastro
 app.post('/cadastro', (req, res) => {
