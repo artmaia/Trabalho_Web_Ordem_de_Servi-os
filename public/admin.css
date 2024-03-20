@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+
+    font-family: 'Fira Code', monospace;
+    color: brown;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    min-height: 300vh; /* Define a altura mínima do corpo como 100% da altura da janela de visualização */
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 1px black;    
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header .span1 {
+    margin-left: 10px;
+}
+
+.header .span2 {
+    margin-right: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table {
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.table caption {
+    background-color: brown;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;
+}
+
+.container-table {
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical para o contêiner da tabela */
+    width: 60%;
+    max-height: 70vh; /* Define a altura máxima do contêiner da tabela como 70% da altura da janela de visualização */
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid brown;
+}
+
+.table thead th {
+    background-color: whitesmoke;;
+    color: brown;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+    background-color: #ddd;
+}
