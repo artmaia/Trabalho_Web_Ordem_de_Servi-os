@@ -171,7 +171,7 @@ app.get('/dados_solicitacao', (req, res) => {
     const usuario_id = req.session.usuario_id;
 
     // Consulta SQL para selecionar as solicitações do usuário logado
-    const sql = 'SELECT usuario_id, hora, data, descricao, categoria, status FROM servico WHERE usuario_id = ?';
+    const sql = 'SELECT id, usuario_id, hora, data, descricao, categoria, status FROM servico WHERE usuario_id = ?';
   
     // Executa a consulta SQL com o ID do usuário como parâmetro
     conexao.query(sql, [usuario_id], (err, results) => {
@@ -187,15 +187,40 @@ app.get('/dados_solicitacao', (req, res) => {
 });
 
 // função para o usuário excluir serviço
+// app.post('/excluir_servico', (req, res) => {
+//     const { id } = req.body;
+
+//     // Execute uma query SQL para excluir o serviço com o ID fornecido
+//     const sql = 'DELETE FROM servico WHERE id = ?';
+//     conexao.query(sql, [id], (err, result) => {
+//         if (err) {
+//             console.error('Erro ao excluir serviço:', err);
+//             res.status(500).send('Erro ao excluir serviço');
+//             return;
+//         }
+
+//         console.log('Serviço excluído com sucesso:', result.affectedRows);
+//         res.status(200).send('Serviço excluído com sucesso');
+//     });
+// });
+
 app.post('/excluir_servico', (req, res) => {
     const { id } = req.body;
+    const usuario_id = req.session.usuario_id; // Recupera o ID do usuário da sessão
 
-    // Execute uma query SQL para excluir o serviço com o ID fornecido
-    const sql = 'DELETE FROM servico WHERE usuario_id = ?';
-    conexao.query(sql, [id], (err, result) => {
+    // Verifica se o ID do serviço pertence ao usuário logado antes de excluir
+    const sql = 'DELETE FROM servico WHERE id = ? AND usuario_id = ?';
+    conexao.query(sql, [id, usuario_id], (err, result) => {
         if (err) {
             console.error('Erro ao excluir serviço:', err);
             res.status(500).send('Erro ao excluir serviço');
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            // Se nenhum serviço foi excluído, significa que o serviço não pertence ao usuário logado
+            console.log('Usuário não tem permissão para excluir este serviço');
+            res.status(403).send('Usuário não tem permissão para excluir este serviço');
             return;
         }
 
@@ -203,6 +228,7 @@ app.post('/excluir_servico', (req, res) => {
         res.status(200).send('Serviço excluído com sucesso');
     });
 });
+
 
 
 //requisição dos dados da tabela serviço no bd para a tabela principal do administrador

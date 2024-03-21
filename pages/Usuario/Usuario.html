@@ -12,7 +12,7 @@
 <body>
     <header class="header">
         <div class="span1">
-            <span>Ordem de serviço</span>
+            <span>GoService</span>
         </div>
         <div class="span2">
             <span>Cliente</span>
@@ -69,6 +69,40 @@
                 </table>
             </div>
         </section>
+        <div>
+            <!-- Modal para edição de serviço -->
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="fecharModal()">×</span>
+                    <h2>Editar Serviço</h2>
+                    <form id="editServiceForm" onsubmit="return editarServico()">
+                        <input type="hidden" id="editId" name="editId">
+                        <div>
+                            <label for="editHora">Hora:</label>
+                            <input type="text" id="editHora" name="editHora" required>
+                        </div>
+                        <div>
+                            <label for="editData">Data:</label>
+                            <input type="date" id="editData" name="editData" required>
+                        </div>
+                        <div>
+                            <label for="editDescricao">Descrição:</label>
+                            <textarea id="editDescricao" name="editDescricao" rows="4" required></textarea>
+                        </div>
+                        <div>
+                            <label for="editCategoria">Categoria:</label>
+                            <select id="editCategoria" name="editCategoria" required>
+                                <option value="Instalação">Instalação</option>
+                                <option value="Manutenção">Manutenção</option>
+                                <option value="Compra">Compra</option>
+                            </select>
+                        </div>
+                        <button type="submit">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
     <script>
         // Função para fazer a solicitação AJAX e preencher a tabela
@@ -84,6 +118,7 @@
                     tabela.innerHTML = '';
     
                     // Itera sobre os dados recebidos e os adiciona à tabela
+                    // adicionei butões editar e excluir
                     data.forEach(row => {
                         const newRow = document.createElement('tr');
                         newRow.innerHTML = `
@@ -92,7 +127,8 @@
                             <td>${row.descricao}</td>
                             <td>${row.categoria}</td>
                             <td>${row.status}</td>
-                            <td><button onclick="excluirServico(${row.usuario_id})">Excluir</button></td>
+                            <td><button class="btn_excluir" onclick="excluirServico(${row.id})">Excluir</button></td>
+                            <td><button id="btnEditar${row.usuario_id}" class="btn_editar" onclick="abrirModal(${row.usuario_id})">Editar</button></td>
                         `;
                         tabela.appendChild(newRow);
                     });
@@ -121,7 +157,19 @@
                 .catch(error => console.error(error));
             }
         }
-    
+
+
+        // Função para abrir o modal de edição
+        function abrirModal() {
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        // Função para fechar o modal de edição
+        function fecharModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+
 
         // Função para formatar a data
         function formatarData(data) {

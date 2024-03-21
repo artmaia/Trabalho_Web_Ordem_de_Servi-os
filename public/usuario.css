@@ -30,6 +30,11 @@
     margin-right: 10px;
 }
 
+.header span {
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
 .containerdiv {
     display: flex;
     
@@ -121,4 +126,54 @@ button {
     overflow-y: auto; 
     width: 640px;
 }
+
+.btn_excluir {
+    padding: 2px;
+}
+
+.btn_editar {
+    padding: 2px;
+}
+
+
+
+/* modal \*
+
+/* Estilo para o modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Estilo para o conteúdo do modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+/* Estilo para o botão de fechar */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
