@@ -88,18 +88,41 @@
                         const newRow = document.createElement('tr');
                         newRow.innerHTML = `
                             <td>${row.hora}</td>
-                            <td>${formatarData(row.data)}</td> <!-- Alteração aqui: chama a função para formatar a data -->
+                            <td>${formatarData(row.data)}</td> 
                             <td>${row.descricao}</td>
                             <td>${row.categoria}</td>
                             <td>${row.status}</td>
+                            <td><button onclick="excluirServico(${row.usuario_id})">Excluir</button></td>
                         `;
                         tabela.appendChild(newRow);
                     });
                 })
                 .catch(error => console.error('Erro ao obter dados:', error));
         }
+
+        // Função para excluir um serviço
+        function excluirServico(id) {
+            if (confirm('Tem certeza que deseja excluir este serviço?')) {
+                fetch('/excluir_servico', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Atualiza a tabela após a exclusão bem-sucedida
+                        preencherTabela();
+                    } else {
+                        throw new Error('Erro ao excluir serviço');
+                    }
+                })
+                .catch(error => console.error(error));
+            }
+        }
     
-        // Função para formatar a data (DD/MM/AAAA)
+
         // Função para formatar a data
         function formatarData(data) {
             // Verifica se a data está no formato ISO 8601 (AAAA-MM-DDTHH:MM:SS.MSZ)

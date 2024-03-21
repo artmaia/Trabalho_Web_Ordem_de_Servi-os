@@ -127,8 +127,6 @@ app.post('/SenhaAdmin', (req, res) => {
     }
 });
 
-
-
 //solicitação de serviços
 app.post('/solicitar_servico', (req, res) => {
     try {
@@ -185,6 +183,24 @@ app.get('/dados_solicitacao', (req, res) => {
   
         // Se a consulta for bem-sucedida, envia os resultados para o cliente
         res.json(results);
+    });
+});
+
+// função para o usuário excluir serviço
+app.post('/excluir_servico', (req, res) => {
+    const { id } = req.body;
+
+    // Execute uma query SQL para excluir o serviço com o ID fornecido
+    const sql = 'DELETE FROM servico WHERE usuario_id = ?';
+    conexao.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error('Erro ao excluir serviço:', err);
+            res.status(500).send('Erro ao excluir serviço');
+            return;
+        }
+
+        console.log('Serviço excluído com sucesso:', result.affectedRows);
+        res.status(200).send('Serviço excluído com sucesso');
     });
 });
 
